@@ -1,0 +1,9 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer components {
+    .btn-blue {
+       @apply w-full rounded-lg border-green-400 focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-500 ease-in-out focus:ring-opacity-100 focus:border-green-400 focus:ring-green-400;
+    }
+  }
