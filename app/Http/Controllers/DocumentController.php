@@ -17,6 +17,16 @@ class DocumentController extends Controller
         return view('upload.upload', compact('users'));
     }
 
+    private function getCode($names)
+    {
+        $name_array = explode(' ', trim($names));
+        $firstWord = $name_array[0];
+        $lastWord = $name_array[count($name_array) - 1];
+        $initials = $firstWord[0] . "" . $lastWord[0];
+
+        return $initials;
+    }
+
     public function tempUpload(Request $request)
     {
         if ($request->hasfile('file')) {
@@ -32,16 +42,16 @@ class DocumentController extends Controller
     {
         $validateData = $request->validate([
             'title' => 'required',
-            'date_created' => 'required',
             'revision_status' => 'required',
             'person_incharge' => 'required',
             'document_creator' => 'required',
-            'revisor' => 'required',
-            'approver' => 'required',
             'department' => 'required',
             'location' => 'required',
+            'uploader_comment' => 'nullable',
         ]);
 
+        $names = $request->title;
+        $Code = $this->getCode($names);
         $file = Session::get('location');
         $Fname = Session::get('Fname');
         Storage::move(
@@ -50,15 +60,12 @@ class DocumentController extends Controller
         );
         Storage::deleteDirectory('public/temp/' . $file);
 
-        $doc = Document::create($validateData + ['file' => $Fname]);
+        $doc = Document::create($validateData + [
+            'file' => $Fname, 'document_no' => $Code, 'date_created' => now()->format('d/m/Y')
+        ]);
+        $doc->update(['document_no' => 'BGF-' . $doc->depart() . '-' . $doc->document_no . '-00' . $doc->id]);
         Toastr::success('Upload Successful', 'Title', ["positionClass" => "toast-bottom-right"]);
 
-        return redirect()->route('document.roles')->with(['doc' => $doc]);
-    }
-
-    public function roles()
-    {
-        $users = User::select('id', 'job_title')->get();
-        return view('upload.roles', compact('users'));
+        return redirect('dashboard');
     }
 }

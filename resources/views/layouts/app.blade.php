@@ -24,16 +24,23 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="{{asset('assets/plugins/fontawesome-free/css/all.min.css')}}">
     <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="{{asset('assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/bs-stepper/css/bs-stepper.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/toastr/toastr.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
     <!-- Select2 -->
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('assets/plugins/toastr/toastr.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
+    <!-- Bootstrap4 Duallistbox -->
+    <link rel="stylesheet" href="{{asset('assets/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
     <!-- dropzonejs -->
     @yield('styles')
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('assets/dist/css/adminlte.min.css')}}">
+    @livewireStyles
     <style>
         .success {
             background-color: #006400;
@@ -59,12 +66,45 @@
                 <div class="collapse navbar-collapse order-3" id="navbarCollapse">
                     <!-- Left navbar links -->
                     <ul class="navbar-nav">
+
                         <li class="nav-item">
-                            <a href="{{route('document.create')}}" class="nav-link text-white">Upload Document</a>
+                            <a href="{{route('document.create')}}" class="text-white nav-link">Upload Document</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-white">HOD Review</a>
+                            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                <li><a href="{{route('hod.it')}}" class="dropdown-item">IT</a></li>
+                                <li><a href="{{route('hod.me')}}" class="dropdown-item">M&E</a></li>
+                                <li><a href="{{route('hod.Forestry')}}" class="dropdown-item">Forestry</a></li>
+                                <li><a href="{{route('hod.Accounts')}}" class="dropdown-item">Accounts</a></li>
+                                <li><a href="{{route('hod.Operations')}}" class="dropdown-item">Operations</a></li>
+                                <li><a href="{{route('hod.MITI')}}" class="dropdown-item">Miti Magazine</a></li>
+                                <li><a href="{{route('hod.Communications')}}" class="dropdown-item">Communications</a></li>
+                                <li><a href="{{route('hod.HR')}}" class="dropdown-item">Human Resources</a></li>
+                                <li class="dropdown-divider"></li>
+                            </ul>
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="text-white nav-link">Find Document</a>
+                            <a href="{{route('qc.table')}}" class="text-white nav-link">QC Review</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{route('md.table')}}" class="text-white nav-link">MD Review/Approval</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="text-white nav-link">Implementation</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-white">Docs Management</a>
+                            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                <li><a href="#" class="dropdown-item">Link Document</a></li>
+                                <li><a href="#" class="dropdown-item">Doc Logs</a></li>
+                                <li class="dropdown-divider"></li>
+                            </ul>
                         </li>
 
                     </ul>
@@ -78,7 +118,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                 <div class="p-2 rounded-md flex justify-between font-bold">
-                                    <p>{{auth()->user()->name}}</p>
+                                    <p>{{auth()->user()->job_title ?? ''}}</p>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <a class="hover:text-blue-600 font-bold cursor-pointer" :href="route('logout')" onclick="event.preventDefault();
@@ -133,6 +173,7 @@
             <strong>Copyright &copy; 2021 <a href="https://document.betterglobeforestry.co.ke">Document Control App</a>.</strong> All rights reserved.
         </footer>
     </div>
+    @livewireScripts
     <!-- jQuery -->
     <script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
     <!-- Bootstrap 4 -->
@@ -146,12 +187,37 @@
     <script src="{{asset('assets/plugins/moment/moment.min.js')}}"></script>
     <script src="{{asset('assets/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
     <!-- date-range-picker -->
+    <script src="{{asset('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
     <!-- Summernote -->
     <script src="{{asset('assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
     <!-- Toastr -->
     <script src="{{asset('assets/plugins/toastr/toastr.min.js')}}"></script>
+    <script>
+        $(function() {
+            $("#example1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": false,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
     {!! Toastr::message() !!}
     @yield('scripts')
     <!-- Page specific script -->
