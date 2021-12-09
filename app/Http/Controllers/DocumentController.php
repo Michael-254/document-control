@@ -121,7 +121,7 @@ class DocumentController extends Controller
             'file' => $Fname, 'user_id' => auth()->id(),
             'document_no' => $Code, 'date_created' => now()->format('Y-m-d'), 'status' => 'pending'
         ]);
-        $document->update(['document_no' => 'BGF-' . $document->depart() . '-' . $document->document_no . '-00' . $document->id]);
+        $document->update(['document_no'  => 'BGF-' . $document->depart() . '-' . $document->document_no . '-00' . $document->id]);
 
         $data = [
             'intro'  => 'Dear HOD' . $document->department . ',',
@@ -130,7 +130,7 @@ class DocumentController extends Controller
             'email' => $document->HODEmail(),
             'subject'  => 'New document for you review'
         ];
-        Mail::send('emails.paypal-mail', $data, function ($message) use ($data) {
+        Mail::send('emails.email', $data, function ($message) use ($data) {
             $message->to($data['email'], $data['name'])
                 ->subject($data['subject']);
         });

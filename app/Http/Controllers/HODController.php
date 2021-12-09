@@ -121,7 +121,7 @@ class HODController extends Controller
                 'email' => 'lawrence@betterglobeforestry.com',
                 'subject'  => 'New Document for review'
             ];
-            Mail::send('emails.paypal-mail', $data, function ($message) use ($data) {
+            Mail::send('emails.email', $data, function ($message) use ($data) {
                 $message->to($data['email'], $data['name'])
                     ->subject($data['subject']);
             });
@@ -133,7 +133,7 @@ class HODController extends Controller
                 'email' => $document->user->email,
                 'subject'  => 'Rejected Document on HOD Review'
             ];
-            Mail::send('emails.paypal-mail', $data, function ($message) use ($data) {
+            Mail::send('emails.email', $data, function ($message) use ($data) {
                 $message->to($data['email'], $data['name'])
                     ->subject($data['subject']);
             });

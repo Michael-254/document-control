@@ -36,7 +36,7 @@ class QCController extends Controller
 
         $document->update($data + ['QC_date' => now()->format('Y-m-d'), 'QC_revisor' => auth()->id()]);
 
-        if ($request->status == 'HOD accepted') {
+        if ($request->status == 'QC accepted') {
             $data = [
                 'intro'  => 'Dear MD,',
                 'content'   => 'New Document has been submitted for your approval, Doc No:' . $document->document_no,
@@ -44,7 +44,7 @@ class QCController extends Controller
                 'email' => 'jpd@betterglobeforestry.com',
                 'subject'  => 'New Document for review'
             ];
-            Mail::send('emails.paypal-mail', $data, function ($message) use ($data) {
+            Mail::send('emails.email', $data, function ($message) use ($data) {
                 $message->to($data['email'], $data['name'])
                     ->subject($data['subject']);
             });
@@ -56,7 +56,7 @@ class QCController extends Controller
                 'email' => $document->user->email,
                 'subject'  => 'Rejected Document on QC Review'
             ];
-            Mail::send('emails.paypal-mail', $data, function ($message) use ($data, $document) {
+            Mail::send('emails.email', $data, function ($message) use ($data, $document) {
                 $message->to($data['email'], $data['name'])
                     ->cc($document->HOD->email)
                     ->subject($data['subject']);

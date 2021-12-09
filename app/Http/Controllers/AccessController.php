@@ -46,7 +46,7 @@ class AccessController extends Controller
                 'email' => $user->email,
                 'subject'  => 'Successful Registration in the Document control App'
             ];
-            Mail::send('emails.paypal-mail', $data, function ($message) use ($data) {
+            Mail::send('emails.email', $data, function ($message) use ($data) {
                 $message->to($data['email'], $data['name'])
                     ->subject($data['subject']);
             });
