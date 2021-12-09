@@ -15,9 +15,10 @@ class CreateDocumentsTable extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
             $table->string('document_no')->nullable();
             $table->string('title')->nullable();
-            $table->string('date_created')->nullable();
+            $table->date('date_created')->nullable();
             $table->string('revision_status')->nullable();
             $table->string('status')->default('pending');
             $table->string('department')->nullable();
@@ -26,18 +27,18 @@ class CreateDocumentsTable extends Migration
             $table->unsignedBigInteger('document_creator')->nullable();
             $table->text('uploader_comment')->nullable();
             $table->unsignedBigInteger('HOD_revisor')->nullable();
-            $table->string('HOD_date')->nullable();
+            $table->date('HOD_date')->nullable();
             $table->text('HOD_comment')->nullable();
             $table->unsignedBigInteger('QC_revisor')->nullable();
-            $table->string('QC_date')->nullable();
+            $table->date('QC_date')->nullable();
             $table->text('QC_comment')->nullable();
             $table->unsignedBigInteger('MD_approver')->nullable();
-            $table->string('MD_date')->nullable();
+            $table->date('MD_date')->nullable();
             $table->text('MD_comment')->nullable();
             $table->unsignedBigInteger('implementor')->nullable();
-            $table->string('implementor_date')->nullable();
+            $table->date('implementor_date')->nullable();
             $table->text('implementor_comment')->nullable();
-            $table->string('implementation_date')->nullable();
+            $table->date('implementation_date')->nullable();
             $table->string('file');
             $table->timestamps();
         });

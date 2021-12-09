@@ -17,7 +17,7 @@
                                 <div class="bg-indigo-50 shadow-2xl rounded-3xl">
                                     <h2 class="text-center text-blue-600 text-2xl font-bold pt-6">Doc No: {{$document->document_no}}</h2>
                                     <div class="w-5/6 m-auto">
-                                        <p class="text-center text-gray-500 pt-1">Doc Name: <a href="#">{{$document->file}}</a></p>
+                                        <p class="text-center text-gray-500 pt-1">Doc Name: <a href="{{route('document.stream',$document)}}" target="_blank">{{$document->file}}</a></p>
                                         <p class="text-center text-gray-500 pt-1">Dept: {{$document->department}}</p>
                                     </div>
                                     <div class="row pt-3 px-3">
@@ -38,20 +38,28 @@
                                             <p class="text-gray-500 pt-1">{{$document->creator->job_title}}</p>
                                         </div>
                                     </div>
-                                    <div class="row pt-3 px-3">
-                                        <div class="form-group col-sm-3">
+
+                                    <div class="row px-3">
+                                        <div class="form-group col-sm-6">
+                                            <p class="font-sans font-bold text-green-500 mb-2">Uploaded By</p>
+                                            <p class="text-gray-500 pt-1">{{$document->user->job_title}}</p>
+                                        </div>
+                                        <div class="form-group col-sm-6">
                                             <p class="font-sans font-bold text-green-500 mb-2">Uploader Comments</p>
                                             <p class="text-gray-500 pt-1">{{$document->uploader_comment}}</p>
                                         </div>
-                                        <div class="form-group col-sm-3">
+                                    </div>
+
+                                    <div class="row pt-3 px-3">
+                                        <div class="form-group col-sm-4">
                                             <p class="font-sans font-bold text-green-500 mb-2">HOD Review Date</p>
                                             <p class="text-gray-500 pt-1">{{$document->HOD_date}}</p>
                                         </div>
-                                        <div class="form-group col-sm-3">
+                                        <div class="form-group col-sm-4">
                                             <p class="font-sans font-bold text-green-500 mb-2">HOD Title</p>
                                             <p class="text-gray-500 pt-1">{{$document->HOD->job_title}}</p>
                                         </div>
-                                        <div class="form-group col-sm-3">
+                                        <div class="form-group col-sm-4">
                                             <p class="font-sans font-bold text-green-500 mb-2">HOD Comment</p>
                                             <p class="text-gray-500 pt-1">{{$document->HOD_comment}}</p>
                                         </div>

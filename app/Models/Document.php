@@ -10,6 +10,7 @@ class Document extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'title',
         'date_created',
         'revision_status',
@@ -17,7 +18,6 @@ class Document extends Model
         'document_creator',
         'uploader_comment',
         'location',
-        'revisor',
         'status',
         'department',
         'document_no',
@@ -37,7 +37,7 @@ class Document extends Model
         'file',
     ];
 
-    public function depart():string
+    public function depart(): string
     {
         return [
             'IT' => 'IT',
@@ -51,39 +51,80 @@ class Document extends Model
         ][$this->department] ?? '$';
     }
 
+    public function HODEmail(): string
+    {
+        return [
+            'IT' => 'jpd@betterglobeforestry.com',
+            'Forestry' => 'samuel@betterglobeforestry.com',
+            'Operations' => 'lawrence@betterglobeforestry.com',
+            'HR' => 'jpd@betterglobeforestry.com',
+            'Communications' => 'jpd@betterglobeforestry.com',
+            'Miti Magazine' => 'jan@betterglobeforestry.com',
+            'Accounts' => 'lawrence@betterglobeforestry.com',
+            'ME' => 'lawrence@betterglobeforestry.com',
+        ][$this->department] ?? 'jpd@betterglobeforestry.com';
+    }
+
     public function scopeSearch($query, $term)
     {
         $term = "%$term%";
         $query->where(function ($query) use ($term) {
             $query->where('document_no', 'like', $term)
-                  ->orWhere('title', 'like', $term)
-                  ->orWhere('department', 'like', $term)
-                  ->orWhere('file', 'like', $term);
+                ->orWhere('title', 'like', $term)
+                ->orWhere('location', 'like', $term)
+                ->orWhere('uploader_comment', 'like', $term)
+                ->orWhere('HOD_comment', 'like', $term)
+                ->orWhere('QC_comment', 'like', $term)
+                ->orWhere('MD_comment', 'like', $term)
+                ->orWhere('implementation_date', 'like', $term)
+                ->orWhere('department', 'like', $term)
+                ->orWhere('status', 'like', $term)
+                ->orWhere('file', 'like', $term);
         });
     }
 
-    public function links(){
-        return $this->hasMany(Link::class,'parent_id');
+    public function links()
+    {
+        return $this->hasMany(Link::class, 'parent_id');
     }
 
-    public function creator(){
-        return $this->belongsTo(User::class,'document_creator');
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withDefault();
     }
 
-    public function personIncharge(){
-        return $this->belongsTo(User::class,'person_incharge');
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'document_creator')->withDefault();
     }
 
-    public function HOD(){
-        return $this->belongsTo(User::class,'HOD_revisor');
+    public function personIncharge()
+    {
+        return $this->belongsTo(User::class, 'person_incharge')->withDefault();
     }
 
-    public function QC(){
-        return $this->belongsTo(User::class,'QC_revisor');
+    public function HOD()
+    {
+        return $this->belongsTo(User::class, 'HOD_revisor')->withDefault();
     }
 
-    public function MD(){
-        return $this->belongsTo(User::class,'MD_approver');
+    public function QC()
+    {
+        return $this->belongsTo(User::class, 'QC_revisor')->withDefault();
     }
 
+    public function MD()
+    {
+        return $this->belongsTo(User::class, 'MD_approver')->withDefault();
+    }
+
+    public function Imp()
+    {
+        return $this->belongsTo(User::class, 'implementor')->withDefault();
+    }
+
+    public function access()
+    {
+        return $this->hasMany(Role::class, 'doc_id');
+    }
 }

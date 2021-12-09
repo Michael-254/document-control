@@ -15,20 +15,21 @@ class DocumentConnect extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $selected_document,$link_document;
-    public $search,$department_filter,$title_filter;
+    public $search,$department_filter,$title_filter,$users;
 
     public function mount(){
-        //$this->selected_document = Session::get('doc')->id;
-        $this->selected_document = 5;
+        $this->users = User::select('id','job_title')->orderBy('job_title','asc')->get();
+        $this->selected_document = Session::get('doc')->id;
+        //$this->selected_document = 5;
         $this->link_document = Document::findOrFail($this->selected_document);
     }
 
     public function render()
     {
         return view('livewire.document-connect',[
-            'users' => User::select('id','job_title')->orderBy('job_title','asc')->get(),
 
             'documents' => Document::with('links.parent')
+                        ->where('status','Implemented')
                         ->whereNotIn('id', [$this->selected_document])
                         ->when($this->department_filter, function ($query) {
                             $query->where('department', $this->department_filter);

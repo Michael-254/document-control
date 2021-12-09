@@ -11,7 +11,7 @@
                 <div class="col-md-12">
                     <div class="card card-default">
                         <div class="card-header">
-                            <h5 class="font-bold leading-tight text-green-600 dark:text-gray-100">Assign Roles</h5>
+                            <h5 class="font-bold leading-tight text-green-600 dark:text-gray-100"> Document implementation</h5>
                         </div>
                         <div class="card-body px-2">
                             <div class="content animate__animated animate__zoomIn px-4 py-1">

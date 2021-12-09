@@ -67,12 +67,16 @@
                     <!-- Left navbar links -->
                     <ul class="navbar-nav">
 
-                        <li class="nav-item">
-                            <a href="{{route('document.create')}}" class="text-white nav-link">Upload Document</a>
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link text-white">Dashboard <i class="fas fa-caret-down"></i></a>
+                            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                <li><a href="{{route('dashboard')}}" class="dropdown-item">My Documents</a></li>
+                                <li><a href="{{route('document.create')}}" class="dropdown-item">Upload Document</a></li>
+                            </ul>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-white">HOD Review</a>
+                            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link text-white">HOD Review <i class="fas fa-caret-down"></i></a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                                 <li><a href="{{route('hod.it')}}" class="dropdown-item">IT</a></li>
                                 <li><a href="{{route('hod.me')}}" class="dropdown-item">M&E</a></li>
@@ -95,14 +99,13 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="text-white nav-link">Implementation</a>
+                            <a href="{{route('imp.table')}}" class="text-white nav-link">Implementation</a>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-white">Docs Management</a>
+                            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link text-white">Docs Management <i class="fas fa-caret-down"></i></a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                <li><a href="#" class="dropdown-item">Link Document</a></li>
-                                <li><a href="#" class="dropdown-item">Doc Logs</a></li>
+                                <li><a href="{{route('document.logs')}}" class="dropdown-item">Doc Logs</a></li>
                                 <li class="dropdown-divider"></li>
                             </ul>
                         </li>

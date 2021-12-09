@@ -18,11 +18,14 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
         'email',
         'site',
         'department',
         'job_title',
+        'HOD',
+        'QC',
+        'MD',
+        'role_admin',
         'password',
     ];
 
@@ -44,4 +47,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function myDocuments(){
+        return $this->hasMany(Document::class);
+    }
 }

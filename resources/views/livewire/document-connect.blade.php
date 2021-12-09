@@ -99,24 +99,24 @@
                                            </tr>
                                        </thead>
                                        <tbody>
-                                           @forelse($documents as $doc)
+                                           @forelse($documents as $document)
                                            <tr>
-                                               <td>{{$doc->document_no}}</td>
-                                               <td>{{$doc->title}}</td>
-                                               <td>{{$doc->department}}</td>
-                                               <td><a href="#" target="_blank">{{ Str::limit($doc->file,25) }}</a></td>
+                                               <td>{{$document->document_no}}</td>
+                                               <td>{{$document->title}}</td>
+                                               <td>{{$document->department}}</td>
+                                               <td><a href="{{route('document.stream',$document)}}" target="_blank">{{ Str::limit($document->file,25) }}</a></td>
                                                <td>
                                                    <ul>
-                                                       @foreach($doc->links as $link)
-                                                       <li>{{$link->parent->title ?? ''}}: <a href="#">{{$link->parent->document_no ?? ''}}</a></li>
+                                                       @foreach($document->links as $link)
+                                                       <li>{{$link->parent->title ?? ''}}: <a href="{{route('document.stream',$link->parent)}}" target="_blank">{{$link->parent->document_no ?? ''}}</a></li>
                                                        @endforeach
                                                    </ul>
                                                </td>
                                                <?php $array = \Arr::flatten($my_doc); ?>
-                                               @if(in_array($doc->id,$array))
-                                               <td><a class="cursor-pointer text-yellow-500 focus:text-yellow-700" wire:click.prevent="unLink({{$doc->id}})">Unlink</a></td>
+                                               @if(in_array($document->id,$array))
+                                               <td><a class="cursor-pointer text-yellow-500 focus:text-yellow-700" wire:click.prevent="unLink({{$document->id}})">Unlink</a></td>
                                                @else
-                                               <td><a class="cursor-pointer text-green-600 focus:text-green-800" wire:click.prevent="createLink({{$doc->id}})">Link</a></td>
+                                               <td><a class="cursor-pointer text-green-600 focus:text-green-800" wire:click.prevent="createLink({{$document->id}})">Link</a></td>
                                                @endif
                                            </tr>
                                            @empty

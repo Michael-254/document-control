@@ -8,7 +8,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="font-bold text-green-500 card-title">Quality Cordinator Review</h3>
+                            <h3 class="font-bold text-green-500 card-title">Final Review and Approval</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -17,7 +17,7 @@
                                 <div class="bg-indigo-50 shadow-2xl rounded-3xl">
                                     <h2 class="text-center text-blue-600 text-2xl font-bold pt-6">Doc No: {{$document->document_no}}</h2>
                                     <div class="w-5/6 m-auto">
-                                        <p class="text-center text-gray-500 pt-1">Doc Name: <a href="#">{{$document->file}}</a></p>
+                                        <p class="text-center text-gray-500 pt-1">Doc Name: <a href="{{route('document.stream',$document)}}" target="_blank">{{$document->file}}</a></p>
                                         <p class="text-center text-gray-500 pt-1">Dept: {{$document->department}}</p>
                                     </div>
                                     <div class="row pt-3 px-3">
@@ -38,8 +38,12 @@
                                             <p class="text-gray-500 pt-1">{{$document->creator->job_title}}</p>
                                         </div>
                                     </div>
-                                    <div class="row pt-3 px-3">
-                                        <div class="form-group col-sm-12">
+                                    <div class="row px-3">
+                                        <div class="form-group col-sm-6">
+                                            <p class="font-sans font-bold text-green-500 mb-2">Uploaded By</p>
+                                            <p class="text-gray-500 pt-1">{{$document->user->job_title}}</p>
+                                        </div>
+                                        <div class="form-group col-sm-6">
                                             <p class="font-sans font-bold text-green-500 mb-2">Uploader Comments</p>
                                             <p class="text-gray-500 pt-1">{{$document->uploader_comment}}</p>
                                         </div>

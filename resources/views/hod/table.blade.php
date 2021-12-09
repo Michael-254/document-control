@@ -33,8 +33,8 @@
                                                 <td>{{$doc->title}}</td>
                                                 <td>{{$doc->document_no}}</td>
                                                 <td>{{$doc->creator->job_title}}</td>
-                                                <td>{{$doc->status}}</td>
                                                 <td>{{$doc->personIncharge->job_title}}</td>
+                                                <td>{{$doc->status}}</td>
                                                 <td>
                                                     <a href="{{route('hod.review',$doc)}}">
                                                         <i class="fas fa-eye text-blue-600 hover:text-blue-800 cursor-pointer"></i>

@@ -17,7 +17,7 @@
                     @csrf
 
                     <div class="mt-4">
-                        <x-label :value="__('Name')" />
+                        <x-label :value="__('Job Title')" />
                         <input type="text" id="name" name="name" class="block w-full btn-blue mt-2" value="{{ old('name') }}" required autofocus />
                     </div>
 
