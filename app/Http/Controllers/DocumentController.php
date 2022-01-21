@@ -26,7 +26,7 @@ class DocumentController extends Controller
 
     public function create()
     {
-        $users = User::select('id', 'job_title')->get();
+        $users = User::select('id', 'job_title')->orderBy('job_title','asc')->get();
         return view('upload.upload', compact('users'));
     }
 

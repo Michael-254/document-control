@@ -21,7 +21,7 @@
 
                     <div class="mt-4">
                         <x-label :value="__('Email')" />
-                        <input type="email" class="block w-full btn-blue mt-2" required autofocus />
+                        <x-input id="email" class="block mt-1 w-full btn-blue" type="email" name="email" :value="old('email', $request->email)" required autofocus />
                     </div>
 
                     <div class="mt-4">
