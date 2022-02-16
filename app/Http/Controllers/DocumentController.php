@@ -16,8 +16,10 @@ class DocumentController extends Controller
     public function myAccess()
     {
         $roles = Role::whereUserId(auth()->id())->pluck('doc_id')->toArray();
-        $documents = Document::whereKey($roles)->get();
-        return view('upload.table', compact('documents'));
+        $documents = Document::with('user', 'creator', 'personIncharge', 'HOD', 'QC', 'MD', 'Imp', 'links', 'access')
+            ->whereKey($roles)
+            ->paginate(10);
+        return view('upload.accessible-docs', compact('documents'));
     }
 
     public function dashboard()
