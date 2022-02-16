@@ -15,7 +15,9 @@ class AccessController extends Controller
     public function fileReview(Document $document)
     {
         $path = storage_path('app/public/documents/' . $document->department . '/' . $document->title . '/' . $document->file);
-        return response()->file($path);
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+        $headers = ['Content-Type' => 'application/' . $extension];
+        return response()->download($path, $document->document_no . '.' . $extension, $headers);
     }
 
     public function protectedFile(Document $document)
@@ -23,7 +25,9 @@ class AccessController extends Controller
         $has_access = \Arr::flatten(Role::where('user_id', auth()->id())->select('doc_id')->get()->toArray());
         if (in_array($document->id, $has_access)) {
             $path = storage_path('app/public/documents/' . $document->department . '/' . $document->title . '/' . $document->file);
-            return response()->file($path);
+            $extension = pathinfo($path, PATHINFO_EXTENSION);
+            $headers = ['Content-Type' => 'application/' . $extension];
+            return response()->download($path, $document->document_no . '.' . $extension, $headers);
         } else {
             abort(403, 'you have No permission to view this document');
         }

@@ -20,6 +20,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('Documents/I-can-access', [\App\Http\Controllers\DocumentController::class, 'myAccess'])->name('my.access');
     Route::get('dashboard', [\App\Http\Controllers\DocumentController::class, 'dashboard'])->name('dashboard');
     Route::get('my-document/{document}/view', [\App\Http\Controllers\DocumentController::class, 'viewDocument'])->name('my.upload');
     Route::get('document/upload', [\App\Http\Controllers\DocumentController::class, 'create'])->name('document.create');
@@ -30,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('document/roles', [\App\Http\Controllers\RoleController::class, 'store'])->name('role.store');
     Route::get('stream/document/{document}', [\App\Http\Controllers\AccessController::class, 'fileReview'])->name('document.stream');
     Route::get('can-read/{document}', [\App\Http\Controllers\AccessController::class, 'protectedFile'])->name('document.withaccess.stream');
-    Route::get('document/logs', DocumentLog::class)->name('document.logs');
+    Route::get('document/logs', DocumentLog::class)->name('document.logs')->middleware('QC');
     Route::get('link/documents', DocumentConnect::class)->name('document.link')->middleware('QC');
     Route::get('users/import', [\App\Http\Controllers\AccessController::class, 'createUsers'])->name('users.create');
     Route::post('users/import', [\App\Http\Controllers\AccessController::class, 'storeUsers'])->name('users.store');

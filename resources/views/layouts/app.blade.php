@@ -70,7 +70,8 @@
                         <li class="nav-item dropdown">
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link text-white">Dashboard <i class="fas fa-caret-down"></i></a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                <li><a href="{{route('dashboard')}}" class="dropdown-item">My Documents</a></li>
+                                <li><a href="{{route('dashboard')}}" class="dropdown-item">My Uploaded Docs</a></li>
+                                <li><a href="{{route('my.access')}}" class="dropdown-item">My Accessible Docs</a></li>
                                 <li><a href="{{route('document.create')}}" class="dropdown-item">Upload Document</a></li>
                             </ul>
                         </li>
@@ -91,11 +92,11 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{route('qc.table')}}" class="text-white nav-link">QC Review</a>
+                            <a href="{{route('qc.table')}}" class="text-white nav-link">QC/WP Review</a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{route('md.table')}}" class="text-white nav-link">MD Review/Approval</a>
+                            <a href="{{route('md.table')}}" class="text-white nav-link">QC&MGT Review/Approval</a>
                         </li>
 
                         <li class="nav-item">

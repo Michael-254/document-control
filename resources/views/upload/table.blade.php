@@ -8,7 +8,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="font-bold text-green-500 card-title">My Uploaded Documents</h3>
+                            <h3 class="font-bold text-green-500 card-title">Documents</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">

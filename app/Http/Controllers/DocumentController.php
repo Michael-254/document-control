@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -12,6 +13,13 @@ use Illuminate\Support\Facades\Mail;
 
 class DocumentController extends Controller
 {
+    public function myAccess()
+    {
+        $roles = Role::whereUserId(auth()->id())->pluck('doc_id')->toArray();
+        $documents = Document::whereKey($roles)->get();
+        return view('upload.table', compact('documents'));
+    }
+
     public function dashboard()
     {
         $documents = Document::whereUserId(auth()->id())->get();
@@ -26,7 +34,7 @@ class DocumentController extends Controller
 
     public function create()
     {
-        $users = User::select('id', 'job_title')->orderBy('job_title','asc')->get();
+        $users = User::select('id', 'job_title')->orderBy('job_title', 'asc')->get();
         return view('upload.upload', compact('users'));
     }
 
