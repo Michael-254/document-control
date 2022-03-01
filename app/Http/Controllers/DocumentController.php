@@ -88,6 +88,19 @@ class DocumentController extends Controller
             'document_no' => $Code, 'date_created' => now()->format('Y-m-d')
         ]);
         $doc->update(['document_no' => 'BGF-' . $doc->depart() . '-' . $doc->document_no . '-00' . $doc->id]);
+
+        $data = [
+            'intro'  => 'Dear HOD' . $doc->department . ',',
+            'content'   => 'New Document bearing document no:' . $doc->document_no . 'has been submitted for your review. Logon to the system for action',
+            'name' => 'HOD' . $doc->department,
+            'email' => $doc->HODEmail(),
+            'subject'  => 'New document for you review'
+        ];
+        Mail::send('emails.email', $data, function ($message) use ($data) {
+            $message->to($data['email'], $data['name'])
+                ->subject($data['subject']);
+        });
+        
         Toastr::success('Upload Successful', 'Title', ["positionClass" => "toast-bottom-right"]);
 
         return redirect('dashboard');

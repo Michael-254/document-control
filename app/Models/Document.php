@@ -48,7 +48,7 @@ class Document extends Model
             'Miti Magazine' => 'MITI',
             'Accounts' => 'ACC',
             'ME' => 'M&E',
-        ][$this->department] ?? '$';
+        ][$this->department] ?? 'IT';
     }
 
     public function HODEmail(): string
