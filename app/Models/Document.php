@@ -127,4 +127,9 @@ class Document extends Model
     {
         return $this->hasMany(Role::class, 'doc_id');
     }
+
+    public function confirms()
+    {
+        return $this->hasOne(Confirm::class, 'doc_id')->withDefault();
+    }
 }

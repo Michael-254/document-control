@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Confirm;
 use App\Models\Document;
 use App\Models\Role;
 use App\Models\User;
@@ -90,8 +91,8 @@ class DocumentController extends Controller
         $doc->update(['document_no' => 'BGF-' . $doc->depart() . '-' . $doc->document_no . '-00' . $doc->id]);
 
         $data = [
-            'intro'  => 'Dear HOD' . $doc->department . ',',
-            'content'   => 'New Document bearing document no:' . $doc->document_no . 'has been submitted for your review. Logon to the system for action',
+            'intro'  => 'Dear HOD ' . $doc->department . ',',
+            'content'   => 'New Document bearing document no: ' . $doc->document_no . 'has been submitted for your review. Logon to the system for action',
             'name' => 'HOD' . $doc->department,
             'email' => $doc->HODEmail(),
             'subject'  => 'New document for you review'
@@ -100,7 +101,7 @@ class DocumentController extends Controller
             $message->to($data['email'], $data['name'])
                 ->subject($data['subject']);
         });
-        
+
         Toastr::success('Upload Successful', 'Title', ["positionClass" => "toast-bottom-right"]);
 
         return redirect('dashboard');
@@ -161,5 +162,37 @@ class DocumentController extends Controller
         Toastr::success('update Successful', 'Title', ["positionClass" => "toast-bottom-right"]);
 
         return redirect('dashboard');
+    }
+
+    public function confirmImp(Document $document)
+    {
+        $document->load('creator', 'personIncharge', 'HOD', 'QC', 'MD', 'user', 'Imp', 'confirms');
+        return view('upload/confirmation-doc', compact('document'));
+    }
+
+    public function confirmUpdate(Document $document,  Request $request)
+    {
+        $data = $request->validate([
+            'received' => 'required',
+            'received_comment' => 'nullable',
+            'read' => 'required',
+            'read_comment' => 'nullable',
+            'doc_implemented' => 'required',
+            'doc_implemented_comment' => 'nullable',
+            'destroyed' => 'required',
+            'destroyed_comment' => 'nullable',
+            'start_date' => 'nullable',
+        ]);
+        $confirm = Confirm::where('doc_id', $document->id)->first();
+        if ($confirm) {
+            $confirm->update($data);
+        } else {
+            $data['doc_id'] = $document->id;
+            Confirm::create($data);
+        }
+
+        Toastr::success('Confirm Details Updated', 'Title', ["positionClass" => "toast-bottom-right"]);
+
+        return redirect('Documents/I-can-access');
     }
 }

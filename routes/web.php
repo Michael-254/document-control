@@ -21,6 +21,8 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('Documents/I-can-access', [\App\Http\Controllers\DocumentController::class, 'myAccess'])->name('my.access');
+    Route::get('Documents/I-can-access/{document}', [\App\Http\Controllers\DocumentController::class, 'confirmImp'])->name('confirm.imp');
+    Route::patch('Documents/I-can-access/{document}', [\App\Http\Controllers\DocumentController::class, 'confirmUpdate'])->name('confirm.update');
     Route::get('dashboard', [\App\Http\Controllers\DocumentController::class, 'dashboard'])->name('dashboard');
     Route::get('my-document/{document}/view', [\App\Http\Controllers\DocumentController::class, 'viewDocument'])->name('my.upload');
     Route::get('document/upload', [\App\Http\Controllers\DocumentController::class, 'create'])->name('document.create');

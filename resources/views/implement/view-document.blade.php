@@ -1,7 +1,4 @@
 <x-app-layout>
-    @section('styles')
-    <link id="bsdp-css" href="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet">
-    @endsection
     <div class="content">
         <div class="container">
 
@@ -10,7 +7,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="font-bold text-green-500 card-title">Document implementation</h3>
+                            <h3 class="font-bold text-green-500 card-title">Assigning Rights and Communication</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -116,9 +113,9 @@
 
                                         <div class="row pt-1 px-3">
                                             <div class="form-group col-sm-6">
-                                                <p class="font-sans font-bold text-green-500 mb-2">Date of implementation</p>
-                                                <div class='input-group date' id='datetimepicker1'>
-                                                    <input type='text' class="btn-blue" name="implementation_date" />
+                                                <p class="font-sans font-bold text-green-500 mb-2">Date of Communication</p>
+                                                <div class='input-group date'>
+                                                    <input type='text' readonly class="btn-blue" name="implementation_date" value="{{ date('Y-m-d') }}" />
                                                     <span class="input-group-addon">
                                                         <span class="glyphicon glyphicon-calendar"></span>
                                                     </span>
@@ -159,17 +156,7 @@
         $(function() {
             //Bootstrap Duallistbox
             $('.duallistbox').bootstrapDualListbox()
-            //DatePicker
-            $('#datetimepicker1').datepicker({
-                format: "yyyy-mm-dd",
-                weekStart: 0,
-                calendarWeeks: true,
-                autoclose: true,
-                todayHighlight: true,
-                orientation: "auto"
-            })
         })
     </script>
-    <script src="https://unpkg.com/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
     @endsection
 </x-app-layout>

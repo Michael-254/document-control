@@ -84,7 +84,8 @@
                                 <x-auth-validation-errors :errors="$errors" />
                                 @if(session()->has('message'))
                                 <script>
-                                    toastr.info('{{ session('message') }}');
+                                    toastr.info('{{ session('
+                                        message ') }}');
                                 </script>
                                 @endif
                             </div>
@@ -96,6 +97,7 @@
                                             <th>Type</th>
                                             <th>Department</th>
                                             <th>Status</th>
+                                            <th>implemetations Info</th>
                                             <th>File Name</th>
                                             <th>Revision Status</th>
                                             <th>Doc Location</th>
@@ -107,9 +109,9 @@
                                             <th>QC Comment</th>
                                             <th>Approver</th>
                                             <th>Approver Comment</th>
-                                            <th>Impelementor</th>
-                                            <th>Impelementor Comment</th>
-                                            <th>Implementation Date</th>
+                                            <th>Communicator</th>
+                                            <th>Communicator Comment</th>
+                                            <th>Communication Date</th>
                                             @if(auth()->user()->QC)
                                             <th>Users with Access</th>
                                             @endif
@@ -121,11 +123,14 @@
                                     </thead>
                                     <tbody>
                                         @forelse($documents as $doc)
-                                        <tr>
+                                        <tr class="@if(!$doc->confirms->received || !$doc->confirms->read || !$doc->confirms->doc_implemented || !$doc->confirms->destroyed)
+                                            bg-red-300
+                                        @endif">
                                             <td>{{$doc->document_no}}</td>
                                             <td>{{$doc->title}}</td>
                                             <td>{{$doc->department}}</td>
                                             <td>{{$doc->status}}</td>
+                                            <td><i wire:click="confirmDetails({{$doc->id}})" data-toggle="modal" data-target=".bd-example-modal-lg" class="fas fa-eye text-green-500 hover:text-green-700 cursor-pointer"></i></td>
                                             <td><a href="{{route('document.withaccess.stream',$doc)}}" target="_blank">{{ Str::limit($doc->file,25) }}</a></td>
                                             <td>{{$doc->revison_status}}</td>
                                             <td>{{$doc->location}}</td>
@@ -200,4 +205,56 @@
         </div>
         <!-- /.card -->
     </div>
+
+    <div wire:ignore.self class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-green-500 font-serif" id="exampleModalLongTitle">Users response to Implementation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-borderless table-responsive">
+                        <thead>
+                            <tr class="text-green-500 font-serif tracking-wide bg-gray-100">
+                                <th scope="col">Name</th>
+                                <th scope="col">Received</th>
+                                <th scope="col">Comment</th>
+                                <th scope="col">Read & Understood</th>
+                                <th scope="col">Comment</th>
+                                <th scope="col">Communicated</th>
+                                <th scope="col">Comment</th>
+                                <th scope="col">Destroyed Previous</th>
+                                <th scope="col">Comment</th>
+                                <th scope="col">Imp Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(!empty($userConfirms))
+                            <tr class="text-center font-serif">
+                                <td>{{ $userConfirms->user->job_title  }}</td>
+                                <td>{{ ($userConfirms->confirms->received) ? "Yes" : "No" }}</td>
+                                <td>{{ $userConfirms->confirms->received_comment }}</td>
+                                <td>{{ ($userConfirms->confirms->read) ? "Yes" : "No" }}</td>
+                                <td>{{ $userConfirms->confirms->read_comment }}</td>
+                                <td>{{ ($userConfirms->confirms->doc_implemented) ? "Yes" : "No" }}</td>
+                                <td>{{ $userConfirms->confirms->doc_implemented_comment }}</td>
+                                <td>{{ ($userConfirms->confirms->destroyed) ? "Yes" : "No" }}</td>
+                                <td>{{ $userConfirms->confirms->destroyed_comment }}</td>
+                                <td>{{ $userConfirms->confirms->start_date }}</td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>

@@ -2,8 +2,10 @@
 
 namespace App\Console;
 
+use App\Models\Role;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Mail;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +26,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('backup:run --only-files')->daily();
+        $schedule->command('backup:clean')->weekly();
     }
 
     /**

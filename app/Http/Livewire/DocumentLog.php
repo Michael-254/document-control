@@ -18,6 +18,7 @@ class DocumentLog extends Component
     public $selected_document, $link_document;
     public $search, $department_filter, $title_filter, $current_status;
     public $assign_access, $user_to_have_access, $users;
+    public $userConfirms;
 
     public function mount()
     {
@@ -28,7 +29,7 @@ class DocumentLog extends Component
     {
         return view('livewire.document-log', [
 
-            'documents' => Document::with('user', 'creator', 'personIncharge', 'HOD', 'QC', 'MD', 'Imp', 'links', 'access')
+            'documents' => Document::with('user', 'creator', 'personIncharge', 'HOD', 'QC', 'MD', 'Imp', 'links', 'access','confirms')
                 ->when($this->department_filter, function ($query) {
                     $query->where('department', $this->department_filter);
                 })
@@ -77,5 +78,9 @@ class DocumentLog extends Component
     {
         $doc = Document::findOrFail($id);
         return redirect()->to('/link/documents')->with(['doc' => $doc]);
+    }
+
+    public function confirmDetails($id){
+         $this->userConfirms = Document::with('confirms')->findorFail($id);
     }
 }

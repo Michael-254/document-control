@@ -100,7 +100,7 @@ class HODController extends Controller
 
     public function reviewDoc(Document $document)
     {
-        $document->load('creator', 'personIncharge', 'QC', 'MD','user');
+        $document->load('creator', 'personIncharge', 'QC', 'MD', 'user');
         return view('hod.view-document', compact('document'));
     }
 
@@ -113,10 +113,10 @@ class HODController extends Controller
 
         $document->update($data + ['HOD_date' => now()->format('Y-m-d'), 'HOD_revisor' => auth()->id()]);
 
-        if($request->status == 'HOD accepted'){
+        if ($request->status == 'HOD accepted') {
             $data = [
                 'intro'  => 'Dear Quality Cordinator,',
-                'content'   => 'New Document has been submitted for your approval, Doc No:' .$document->document_no,
+                'content'   => 'New Document has been submitted for your approval, Doc No:' . $document->document_no,
                 'name' => 'Quality Coedinator',
                 'email' => 'lawrence@betterglobeforestry.com',
                 'subject'  => 'New Document for review'
@@ -125,10 +125,10 @@ class HODController extends Controller
                 $message->to($data['email'], $data['name'])
                     ->subject($data['subject']);
             });
-        }else{
+        } else {
             $data = [
                 'intro'  => 'Dear ' . $document->user->job_title . ',',
-                'content'   => 'Your Document bearing document no:' .$document->document_no. 'Was rejected for reasons:' .$request->HOD_comment,
+                'content'   => 'Your Document bearing document no:' . $document->document_no . 'Was rejected for reasons:' . $request->HOD_comment,
                 'name' => $document->user->job_title,
                 'email' => $document->user->email,
                 'subject'  => 'Rejected Document on HOD Review'

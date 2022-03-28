@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class RoleController extends Controller
@@ -47,6 +48,20 @@ class RoleController extends Controller
             ]);
         }
 
+        $notify = $document->personIncharge;
+        $data = [
+            'intro'  => 'Dear ' . $notify->job_title . ',',
+            'content'  => 'Your ' .$document->title. ' has been approved and ready for implementation Click the link below to implement',
+            'link' =>  config('app.url').'/Documents/I-can-access/'.$document->id,
+            'email' => $notify->email,
+            'name' => $notify->job_title,
+            'subject'  => 'New Document for implementation confirmation',
+        ];
+        Mail::send('emails.email-jobs', $data, function ($message) use ($data) {
+            $message->to($data['email'], $data['name'])
+                ->subject($data['subject']);
+        });
+
         Toastr::success('Upload Successful', 'Title', ["positionClass" => "toast-bottom-right"]);
 
         if ($request->link == 'yes') {
@@ -55,5 +70,4 @@ class RoleController extends Controller
             return redirect()->route(Session::get('route'));
         }
     }
-
 }

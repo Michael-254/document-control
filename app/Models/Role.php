@@ -17,4 +17,8 @@ class Role extends Model
     public function user(){
         return $this->belongsTo(User::class,'user_id')->withDefault();
     }
+
+    public function doc(){
+        return $this->belongsTo(Document::class,'doc_id')->withDefault();
+    }
 }
