@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class RoleController extends Controller
 {
@@ -37,9 +38,23 @@ class RoleController extends Controller
             "implementation_date" => "required",
         ]);
 
+        $time = time();
+
+        if (!\File::exists(public_path('images/QRCodes'))) {
+            \File::makeDirectory(public_path('images/QRCodes'), $mode = 0777, true, true);
+        }
+
+        $qr_code =  $time . '.svg';
+
+        QrCode::size(300)
+            ->generate(config('app.url') . '/images/QRCodes/' . $qr_code, 'images/QRCodes/' . $qr_code);
+
+        $qr_path = public_path('images/QRCodes/' . $qr_code);
+
         $document->update([
             'implementor_date' => now()->format('Y-m-d'), 'implementor_comment' => $request->implementor_comment,
-            'implementor' => auth()->id(), 'implementation_date' => $request->implementation_date, 'status' => 'Implemented'
+            'implementor' => auth()->id(), 'implementation_date' => $request->implementation_date, 'status' => 'Implemented',
+            'qr_code' => $qr_code
         ]);
 
         foreach ($request->user_id as $key => $user_id) {
@@ -51,15 +66,16 @@ class RoleController extends Controller
         $notify = $document->personIncharge;
         $data = [
             'intro'  => 'Dear ' . $notify->job_title . ',',
-            'content'  => 'Your ' .$document->title. ' has been approved and ready for implementation Click the link below to implement',
-            'link' =>  config('app.url').'/Documents/I-can-access/'.$document->id,
+            'content'  => 'Your ' . $document->title . ' has been approved and ready for implementation Click the link below to implement or scan the attach QR Code',
+            'link' =>  config('app.url') . '/Documents/I-can-access/' . $document->id,
             'email' => $notify->email,
             'name' => $notify->job_title,
             'subject'  => 'New Document for implementation confirmation',
         ];
-        Mail::send('emails.email-jobs', $data, function ($message) use ($data) {
+        Mail::send('emails.email-jobs', $data, function ($message) use ($data, $qr_path) {
             $message->to($data['email'], $data['name'])
-                ->subject($data['subject']);
+                ->subject($data['subject'])
+                ->attach($qr_path);
         });
 
         Toastr::success('Upload Successful', 'Title', ["positionClass" => "toast-bottom-right"]);

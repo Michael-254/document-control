@@ -84,8 +84,7 @@
                                 <x-auth-validation-errors :errors="$errors" />
                                 @if(session()->has('message'))
                                 <script>
-                                    toastr.info('{{ session('
-                                        message ') }}');
+                                    toastr.info('{{ session('message') }}');
                                 </script>
                                 @endif
                             </div>
@@ -94,6 +93,7 @@
                                     <thead class="text-blue-700">
                                         <tr>
                                             <th>Doc No</th>
+                                            <th>QR Code</th>
                                             <th>Type</th>
                                             <th>Department</th>
                                             <th>Status</th>
@@ -127,6 +127,7 @@
                                             bg-red-300
                                         @endif">
                                             <td>{{$doc->document_no}}</td>
+                                            <td><img src="{{ asset('images/QRCodes/'.$doc->qr_code) }}" class="img img-responsive"></td>
                                             <td>{{$doc->title}}</td>
                                             <td>{{$doc->department}}</td>
                                             <td>{{$doc->status}}</td>

@@ -40,6 +40,7 @@ class CreateDocumentsTable extends Migration
             $table->text('implementor_comment')->nullable();
             $table->date('implementation_date')->nullable();
             $table->string('file');
+            $table->string('qr_code')->nullable();
             $table->timestamps();
         });
     }

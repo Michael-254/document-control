@@ -35,6 +35,7 @@ class Document extends Model
         'implementor_comment',
         'implementation_date',
         'file',
+        'qr_code',
     ];
 
     public function depart(): string
