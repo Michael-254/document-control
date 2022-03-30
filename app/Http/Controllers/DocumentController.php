@@ -166,8 +166,12 @@ class DocumentController extends Controller
 
     public function confirmImp(Document $document)
     {
-        $document->load('creator', 'personIncharge', 'HOD', 'QC', 'MD', 'user', 'Imp', 'confirms');
-        return view('upload/confirmation-doc', compact('document'));
+        if (auth()->id() == $document->personIncharge->id) {
+            $document->load('creator', 'personIncharge', 'HOD', 'QC', 'MD', 'user', 'Imp', 'confirms');
+            return view('upload/confirmation-doc', compact('document'));
+        } else {
+            abort(403, 'You are are not the process owner');
+        }
     }
 
     public function confirmUpdate(Document $document,  Request $request)

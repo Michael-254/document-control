@@ -45,7 +45,11 @@
                                                 <td>{{$doc->title}}</td>
                                                 <td>{{$doc->department}}</td>
                                                 <td>{{$doc->status}}</td>
-                                                <td><a href="{{route('confirm.imp',$doc)}}"><i class="fas fa-eye text-green-500 hover:text-green-800 cursor-pointer"></i></a></td>
+                                                <td>
+                                                    @if (auth()->id() == $doc->personIncharge->id)
+                                                    <a href="{{route('confirm.imp',$doc)}}"><i class="fas fa-eye text-green-500 hover:text-green-800 cursor-pointer"></i></a>                                                     
+                                                    @endif
+                                                </td>
                                                 <td><img src="{{ asset('images/QRCodes/'.$doc->qr_code) }}" class="img img-responsive"></td>
                                                 <td><a href="{{route('document.withaccess.stream',$doc)}}" target="_blank">{{ Str::limit($doc->file,25) }}</a></td>
                                                 <td>{{$doc->revison_status}}</td>
