@@ -16,6 +16,7 @@
         "livewire/livewire": "^2.7",
         "maatwebsite/excel": "^3.1",
         "mediconesystems/livewire-datatables": "^0.6.8",
+        "nao-pon/flysystem-google-drive": "^1.1",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-backup": "7.0"
     },
