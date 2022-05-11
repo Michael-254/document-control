@@ -130,6 +130,7 @@ class DocumentController extends Controller
         $Code = $this->getCode($names);
         $file = Session::get('location');
         $Fname = Session::get('Fname');
+        $filename = $Fname.'-'.$request->revision_status;
 
         $path = storage_path('app/public/documents/' . $document->department . '/' . $document->title . '/' . $document->file);
         if ($path) {
@@ -137,7 +138,7 @@ class DocumentController extends Controller
         }
         Storage::move(
             'public/temp/' . $file . '/' . $Fname,
-            'public/documents/' . $request->department . '/' . $request->title . '/' . $Fname
+            'public/documents/' . $request->department . '/' . $request->title . '/' . $filename
         );
         Storage::deleteDirectory('public/temp/' . $file);
 
