@@ -35,6 +35,8 @@
                             <option value="Nyongoro">Nyongoro</option>
                             <option value="Kiambere">Kiambere</option>
                             <option value="Dokolo">Dokolo</option>
+                            <option value="7 Forks">7 Forks</option>
+                            <option value="Kampala">Kampala</option>
                         </select>
                     </div>
 

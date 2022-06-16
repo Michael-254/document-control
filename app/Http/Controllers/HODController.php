@@ -98,6 +98,16 @@ class HODController extends Controller
         return view('hod.table', compact('documents'));
     }
 
+    public function SeniorManagement(){
+        Session::put('route', 'SM');
+        $documents = Document::with('creator', 'personIncharge')
+            ->where([['department', '=', 'Management'], ['status', '=', 'pending']])
+            ->OrWhere([['department', '=', 'Management'], ['status', '=', 'QC rejected']])
+            ->orderBy('date_created', 'desc')
+            ->get();
+        return view('hod.table', compact('documents'));
+    }
+
     public function reviewDoc(Document $document)
     {
         $document->load('creator', 'personIncharge', 'QC', 'MD', 'user');

@@ -87,6 +87,7 @@
                                 <li><a href="{{route('hod.MITI')}}" class="dropdown-item">Miti Magazine</a></li>
                                 <li><a href="{{route('hod.Communications')}}" class="dropdown-item">Communications</a></li>
                                 <li><a href="{{route('hod.HR')}}" class="dropdown-item">Human Resources</a></li>
+                                <li><a href="{{route('hod.SM')}}" class="dropdown-item">Senior Management</a></li>
                                 <li class="dropdown-divider"></li>
                             </ul>
                         </li>

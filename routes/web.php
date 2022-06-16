@@ -46,6 +46,7 @@ Route::prefix('HOD')->middleware(['auth', 'HOD'])->group(function () {
     Route::get('/Accounts', [\App\Http\Controllers\HODController::class, 'Accounts'])->name('hod.Accounts');
     Route::get('/Operations', [\App\Http\Controllers\HODController::class, 'Operations'])->name('hod.Operations');
     Route::get('/Human-Resources', [\App\Http\Controllers\HODController::class, 'HR'])->name('hod.HR');
+    Route::get('/Senior-management', [\App\Http\Controllers\HODController::class, 'SeniorManagement'])->name('hod.SM');
     Route::get('/Forestry', [\App\Http\Controllers\HODController::class, 'Forestry'])->name('hod.Forestry');
     Route::get('/Miti-magazine', [\App\Http\Controllers\HODController::class, 'MITI'])->name('hod.MITI');
     Route::get('/{document}/Review', [\App\Http\Controllers\HODController::class, 'reviewDoc'])->name('hod.review');
